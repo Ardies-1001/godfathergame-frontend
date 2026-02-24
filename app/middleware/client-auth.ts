@@ -6,12 +6,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     await fetchUser()
   }
 
-  if (!isAuthenticated.value && to.path !== '/admin/login') {
+  if (!isAuthenticated.value) {
     return navigateTo('/admin/login')
   }
 
-  // Redirect client users to client dashboard if they try to access admin area
-  if (isAuthenticated.value && user.value?.role === 'USER' && to.path.startsWith('/admin')) {
-    return navigateTo('/client')
+  if (user.value?.role !== 'USER') {
+    return navigateTo('/admin')
   }
 })

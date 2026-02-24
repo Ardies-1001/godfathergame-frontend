@@ -79,7 +79,7 @@ definePageMeta({
   layout: false
 })
 
-const { login } = useAuth()
+const { login, user } = useAuth()
 const router = useRouter()
 
 const email = ref('')
@@ -94,7 +94,11 @@ const handleLogin = async () => {
   try {
     const success = await login(email.value, password.value)
     if (success) {
-      router.push('/admin')
+      if (user.value?.role === 'ADMIN') {
+        router.push('/admin')
+      } else {
+        router.push('/client')
+      }
     } else {
       error.value = 'Identifiants invalides'
     }

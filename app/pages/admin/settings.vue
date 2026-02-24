@@ -56,14 +56,6 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
               Notifications
             </button>
-            <button 
-              @click="activeTab = 'security'"
-              class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors"
-              :class="activeTab === 'security' ? 'bg-blue-500/10 text-blue-400' : 'text-slate-400 hover:bg-white/5 hover:text-white'"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              Sécurité
-            </button>
           </nav>
         </div>
       </div>
@@ -168,43 +160,6 @@
           </div>
         </div>
 
-        <!-- Security Settings -->
-        <div v-if="activeTab === 'security'" class="bg-slate-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-          <h2 class="text-lg font-semibold text-white mb-6">Sécurité</h2>
-          <div class="space-y-6">
-            <div class="space-y-4">
-              <h3 class="text-sm font-medium text-slate-400 uppercase tracking-wider">Changer le mot de passe</h3>
-              
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">Mot de passe actuel</label>
-                <input 
-                  v-model="passwordForm.currentPassword" 
-                  type="password" 
-                  class="w-full rounded-lg border border-white/10 bg-slate-950/50 px-3 py-2 text-white focus:border-blue-500/50 focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all" 
-                />
-              </div>
-
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">Nouveau mot de passe</label>
-                <input 
-                  v-model="passwordForm.newPassword" 
-                  type="password" 
-                  class="w-full rounded-lg border border-white/10 bg-slate-950/50 px-3 py-2 text-white focus:border-blue-500/50 focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all" 
-                />
-              </div>
-
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">Confirmer le nouveau mot de passe</label>
-                <input 
-                  v-model="passwordForm.confirmPassword" 
-                  type="password" 
-                  class="w-full rounded-lg border border-white/10 bg-slate-950/50 px-3 py-2 text-white focus:border-blue-500/50 focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all" 
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -237,53 +192,9 @@ const defaultSettings = {
 
 const settings = ref(JSON.parse(JSON.stringify(defaultSettings)))
 
-const passwordForm = reactive({
-  currentPassword: '',
-  newPassword: '',
-  confirmPassword: ''
-})
-
 const saveSettings = () => {
   isLoading.value = true
   
-  // Validation mot de passe si on est dans l'onglet sécurité
-  if (activeTab.value === 'security') {
-    if (!passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword) {
-      toast.add({
-        title: 'Erreur',
-        description: 'Veuillez remplir tous les champs du mot de passe',
-        color: 'red'
-      })
-      isLoading.value = false
-      return
-    }
-
-    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      toast.add({
-        title: 'Erreur',
-        description: 'Les nouveaux mots de passe ne correspondent pas',
-        color: 'red'
-      })
-      isLoading.value = false
-      return
-    }
-
-    // Simulation changement mot de passe
-    setTimeout(() => {
-      isLoading.value = false
-      toast.add({
-        title: 'Succès',
-        description: 'Le mot de passe a été modifié avec succès',
-        color: 'green'
-      })
-      // Reset form
-      passwordForm.currentPassword = ''
-      passwordForm.newPassword = ''
-      passwordForm.confirmPassword = ''
-    }, 1000)
-    return
-  }
-
   // Simulate API call for other settings
   setTimeout(() => {
     isLoading.value = false

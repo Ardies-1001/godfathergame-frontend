@@ -114,7 +114,7 @@ const handleRegister = async () => {
         description: 'Bienvenue sur GodFatherGame !',
         color: 'green'
       })
-      router.push('/admin')
+      router.push('/client')
     } else {
       error.value = 'Erreur lors de l\'inscription. Cet email est peut-être déjà utilisé.'
     }

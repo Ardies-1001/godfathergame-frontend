@@ -159,10 +159,15 @@ const mainLinks: NavLink[] = [
   { label: 'Contact', to: '/contact' }
 ]
 
-const extraLinks: NavLink[] = [
+const { isAuthenticated, user } = useAuth()
+
+const extraLinks = computed<NavLink[]>(() => [
   { label: 'Mentions légales', to: '/mentions-legales' },
   { label: 'CGV', to: '/cgv' },
   { label: 'Catalogue', to: '/catalogue' },
-  { label: 'Témoignages', to: '/temoignages' }
-]
+  { label: 'Témoignages', to: '/temoignages' },
+  isAuthenticated.value
+    ? { label: 'Mon Espace', to: user.value?.role === 'ADMIN' ? '/admin' : '/client' }
+    : { label: 'Connexion', to: '/admin/login' }
+])
 </script>
