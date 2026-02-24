@@ -51,7 +51,7 @@ export default defineNuxtConfig({
       pass: process.env.NUXT_SMTP_PASS
     },
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:3001',
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
       siteName: process.env.NUXT_PUBLIC_SITE_NAME,
       contactEmail: process.env.NUXT_PUBLIC_CONTACT_EMAIL,
       contactPhone: process.env.NUXT_PUBLIC_CONTACT_PHONE,
